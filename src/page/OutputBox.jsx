@@ -12,13 +12,20 @@ export default function OutputBox() {
   };
 
   return (
-    <>
-      <select value={realList.userType} onChange={handleSelect}>
-        <option value="Student">Student</option>
-        <option value="Self-employed">Self-Employed</option>
-        <option value="Business">Business</option>
-      </select>
+    <div className="flex flex-col items-center justify-center h-screen">
+      <div className="p-10">
+        <select
+          value={realList.name}
+          onChange={handleSelect}
+          className="p-2 border-2 border-black rounded-lg"
+        >
+          <option value="">Select</option>
+          <option value="Student">Student</option>
+          <option value="Self-employed">Self-Employed</option>
+          <option value="Business">Business</option>
+        </select>
+      </div>
       <Dropdown lord={stit} />
-    </>
+    </div>
   );
 }

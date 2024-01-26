@@ -14,7 +14,9 @@ export default function InputField() {
     displayName: "Name",
     name: "Text",
     fieldType: "String",
-    validation: "",
+    validation: 10,
+    dateRange: { from: "", to: "" },
+    date: "",
     mandatory: "No",
     fieldData: [],
   });
@@ -27,6 +29,16 @@ export default function InputField() {
     });
   };
 
+  const handleDateChange = (field, value) => {
+    setFormData({
+      ...formData,
+      dateRange: {
+        ...formData.dateRange,
+        [field]: value,
+      },
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(realField(formData));
@@ -36,6 +48,7 @@ export default function InputField() {
       name: "Text",
       fieldType: "String",
       validation: "",
+      dateRange: { from: "", to: "" },
       mandatory: "No",
       fieldData: [],
     });
@@ -91,17 +104,41 @@ export default function InputField() {
             ))}
           </select>
         </div>
+
         <div className="flex flex-col gap-2">
           <label>Field Validation</label>
-          <input
-            type="number"
-            className="p-1"
-            placeholder={formData.validation}
-            value={formData.validation}
-            onChange={(e) =>
-              setFormData({ ...formData, validation: e.target.value })
-            }
-          />
+          {formData.name === "Date" ? (
+            <>
+              <div className="fieldrowelem">
+                <label>Date Range From</label>
+                <input
+                  type="date"
+                  placeholder="From"
+                  value={formData.dateRange.from}
+                  onChange={(e) => handleDateChange("from", e.target.value)}
+                />
+              </div>
+              <div className="fieldrowelem">
+                <label>Date Range To</label>
+                <input
+                  type="date"
+                  placeholder="To"
+                  value={formData.dateRange.to}
+                  onChange={(e) => handleDateChange("to", e.target.value)}
+                />
+              </div>
+            </>
+          ) : (
+            <input
+              type="number"
+              className="p-1"
+              placeholder={formData.validation}
+              value={formData.validation}
+              onChange={(e) =>
+                setFormData({ ...formData, validation: e.target.value })
+              }
+            />
+          )}
         </div>
         <div className="flex flex-col gap-2">
           <label>Mandatory</label>
